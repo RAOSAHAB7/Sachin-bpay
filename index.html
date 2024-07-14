@@ -1,38 +1,82 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UPI Payment Link Maker</title>
+    <title>भुगतान करें</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f0f0f0; /* Light grey background */
+            color: #333; /* Dark grey text color */
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #ffffff; /* White container background */
+            padding: 30px;
+            border: 1px solid #ccc; /* Light grey border */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+        }
+        .container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #4CAF50; /* Green header color */
+        }
+        .container img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        .btn-pay {
+            background-color: #4CAF50; /* Green button background */
+            color: white; /* White button text */
+            padding: 12px 36px; /* Larger padding */
+            border: none;
+            border-radius: 5px; /* Slightly rounded corners */
+            cursor: pointer;
+            font-size: 1.2rem;
+            margin-top: 30px; /* Increased top margin */
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+        }
+        .btn-pay:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+        .payment-instructions {
+            text-align: left;
+            margin-top: 20px;
+            font-size: 1.1rem;
+        }
+    </style>
 </head>
 <body>
-    <h1>UPI Payment Link Maker</h1>
-    <form id="upiForm">
-        <label for="upiId">UPI ID:</label>
-        <input type="text" id="upiId" name="upiId" required>
-        <br>
-        <label for="note">Note:</label>
-        <input type="text" id="note" name="note">
-        <br>
-        <button type="submit">Generate Link</button>
-    </form>
-    <p id="upiLink"></p>
+    <div class="container">
+        <h1>अब भुगतान करें</h1>
+        <!-- Replace with your actual UPI QR code or remove if not needed -->
+        <!-- <img src="path-to-your-upi-qr-code.png" alt="UPI QR Code"> -->
+        <p>अपना भुगतान करने के लिए पेमेंट ऐप्प चुनें:</p>
+        <button class="btn-pay" onclick="payNow()">अब भुगतान करें</button>
+        <div class="payment-instructions">
+            <p>भुगतान करने के लिए "अब भुगतान करें" पर क्लिक करें और फिर अपना पेमेंट एप्प चुनें, जैसे PhonePe, GPay, Paytm आदि।</p>
+        </div>
+    </div>
 
     <script>
-        document.getElementById('upiForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const upiId = document.getElementById('upiId').value;
-            const note = document.getElementById('note').value;
+        function payNow() {
+            const upiId = 'BHARATPE.8T0N0G4D4o50478@fbpe'; // Replace with your UPI ID
+            const amount = ''; // Replace with your transaction amount
+            const note = ''; // Replace with your transaction note
+            const name = 'आपका नाम'; // Replace with your name
+            const currency = 'INR'; // Replace with your currency code (e.g., INR)
 
-            const response = await fetch('/generate-link', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ upiId, note })
-            });
+            const paymentUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(name)}&am=${encodeURIComponent(amount)}&tn=${encodeURIComponent(note)}&cu=${encodeURIComponent(currency)}`;
 
-            const data = await response.json();
-            document.getElementById('upiLink').innerText = data.link;
-        });
+            // Redirect to UPI payment app
+            window.location.href = paymentUrl;
+        }
     </script>
-
-</body></html>
+</body>
+</html>
